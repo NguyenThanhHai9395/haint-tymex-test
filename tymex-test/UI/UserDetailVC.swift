@@ -46,6 +46,21 @@ class UserDetailVC: BaseVC {
         return label
     }()
 
+    private let loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+
+    private lazy var mainStack: UIStackView = {
+        let mainStack = UIStackView()
+        mainStack.axis = .vertical
+        mainStack.spacing = 24
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
+        return mainStack
+    }()
+
     init(viewModel: UserDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -68,6 +83,9 @@ class UserDetailVC: BaseVC {
         view.backgroundColor = .systemBackground
 
         view.addSubview(userCardView)
+        view.addSubview(loadingIndicator)
+
+        loadingIndicator.centerInSuperview()
 
         userCardView.anchor(
             heightConstant: 120
@@ -82,10 +100,7 @@ class UserDetailVC: BaseVC {
         blogStack.axis = .vertical
         blogStack.spacing = 6
 
-        let mainStack = UIStackView(arrangedSubviews: [userCardView, statsStack, blogStack])
-        mainStack.axis = .vertical
-        mainStack.spacing = 24
-        mainStack.translatesAutoresizingMaskIntoConstraints = false
+        mainStack.addArrangedSubviews(userCardView, statsStack, blogStack)
 
         view.addSubview(mainStack)
 
@@ -108,6 +123,19 @@ class UserDetailVC: BaseVC {
                 followingStat.configure(icon: UIImage(systemName: "person.fill.badge.plus"), value: detail.following, title: "Following")
                 blogLinkLabel.text = detail.blog ?? "No blog"
 
+            }
+            .store(in: &cancellables)
+
+        viewModel.$isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                guard let self else { return }
+                if isLoading {
+                    self.loadingIndicator.startAnimating()
+                } else {
+                    self.loadingIndicator.stopAnimating()
+                }
+                self.mainStack.isHidden = isLoading
             }
             .store(in: &cancellables)
     }

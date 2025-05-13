@@ -33,19 +33,21 @@ class UserListVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "GitHub Users"
         setupUI()
         bindViewModel()
         fetchData()
     }
 
     private func setupUI() {
-        tableView.frame = view.bounds
-        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        title = "GitHub Users"
+        view.backgroundColor = UIColor.systemGroupedBackground
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.register(UserCell.self, forCellReuseIdentifier: UserCell.identifier)
         view.addSubview(tableView)
+        tableView.pinToEdges(of: view)
     }
 
     private func bindViewModel() {
@@ -70,17 +72,11 @@ extension UserListVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let user = viewModel.users[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        var config = cell.defaultContentConfiguration()
-        config.text = user.login
-        config.secondaryText = "ID: \(user.id)"
-        cell.contentConfiguration = config
-
-        if indexPath.row == viewModel.users.count - 1 {
-            Task { await viewModel.loadMore() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserCell.identifier, for: indexPath) as? UserCell else {
+            return UITableViewCell()
         }
-
+        let user = viewModel.users[indexPath.row]
+        cell.configure(with: user)
         return cell
     }
 
@@ -88,5 +84,16 @@ extension UserListVC: UITableViewDataSource, UITableViewDelegate {
         let user = viewModel.users[indexPath.row]
         delegate?.userListVC(didSelectUser: user)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let threshold: CGFloat = 100
+        if offsetY > contentHeight - scrollView.frame.height - threshold {
+            Task {
+                await viewModel.loadMore()
+            }
+        }
     }
 }

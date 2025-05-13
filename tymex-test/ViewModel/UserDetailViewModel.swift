@@ -14,9 +14,9 @@ class UserDetailViewModel: ObservableObject {
     @Published private(set) var errorMessage: String?
 
     private let userName: String
-    private let service: GithubService
+    private let service: GithubServiceProtocol
 
-    init(userName: String, service: GithubService) {
+    init(userName: String, service: GithubServiceProtocol) {
         self.userName = userName
         self.service = service
     }

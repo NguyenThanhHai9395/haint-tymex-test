@@ -24,9 +24,6 @@ class MockGithubService: GithubServiceProtocol {
         ]
     }
 
-//    func fetchUserDetail(username: String) async throws -> GithubUserDetail {
-//        fatalError("Not used in this test")
-//    }
 
     func fetchUserDetail(username: String) async throws -> GithubUserDetail {
         if shouldFail {

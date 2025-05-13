@@ -34,3 +34,8 @@ An iOS application built with Swift and Combine that displays a list of GitHub u
 Clone this repository:
    ```bash
    git clone https://github.com/yourusername/github-users-browser.git
+  ```
+
+## ▶️ Demo
+
+![demo](https://github.com/user-attachments/assets/f15664a5-6016-48b8-aa1a-2dab77ee3077)

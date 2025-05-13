@@ -11,7 +11,7 @@ import Kingfisher
 final class UserCell: UITableViewCell {
     static let identifier = "UserCell"
 
-    private let container: UIView = {
+    private lazy var container: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -19,7 +19,7 @@ final class UserCell: UITableViewCell {
         view.addShadow()
         return view
     }()
-    private let avatarImageView: UIImageView = {
+    private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "placeholderAvatar") // Add placeholder
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +29,7 @@ final class UserCell: UITableViewCell {
         return imageView
     }()
 
-    private let avatarContainer: UIView = {
+    private lazy var avatarContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray6
@@ -38,14 +38,14 @@ final class UserCell: UITableViewCell {
         return view
     }()
 
-    private let nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.numberOfLines = 0
         nameLabel.font = .boldSystemFont(ofSize: 16)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
     }()
-    private let linkLabel: UILabel = {
+    private lazy var linkLabel: UILabel = {
         let linkLabel = UILabel()
         linkLabel.font = .systemFont(ofSize: 14)
         linkLabel.textColor = .systemBlue
@@ -54,7 +54,7 @@ final class UserCell: UITableViewCell {
         return linkLabel
     }()
 
-    private let separatorView = SeparatorView(height: 0.75)
+    private lazy var separatorView = SeparatorView(height: 0.75)
 
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [nameLabel, separatorView, linkLabel, UIView()])

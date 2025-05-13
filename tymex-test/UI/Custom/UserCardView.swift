@@ -10,7 +10,7 @@ import Kingfisher
 
 final class UserCardView: UIView {
 
-    private let container: UIView = {
+    private lazy var container: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -19,7 +19,7 @@ final class UserCardView: UIView {
         return view
     }()
 
-    private let avatarImageView: UIImageView = {
+    private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "placeholderAvatar")
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +29,7 @@ final class UserCardView: UIView {
         return imageView
     }()
 
-    private let avatarContainer: UIView = {
+    private lazy var avatarContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray6
@@ -38,7 +38,7 @@ final class UserCardView: UIView {
         return view
     }()
 
-    private let nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.numberOfLines = 0
@@ -47,8 +47,8 @@ final class UserCardView: UIView {
         return label
     }()
 
-    private let separatorView = SeparatorView(height: 0.75)
-    private let locationView = LocationView(location: " ")
+    private lazy var separatorView = SeparatorView(height: 0.75)
+    private lazy var locationView = LocationView(location: " ")
 
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [nameLabel, separatorView, locationView, UIView()])

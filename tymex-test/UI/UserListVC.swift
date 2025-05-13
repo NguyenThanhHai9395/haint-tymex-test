@@ -19,7 +19,7 @@ class UserListVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private let tableView = UITableView()
+    private lazy var tableView = UITableView()
     private let viewModel: UserListViewModel
     private var cancelables: Set<AnyCancellable> = []
     weak var delegate: UserListVCDelegate?

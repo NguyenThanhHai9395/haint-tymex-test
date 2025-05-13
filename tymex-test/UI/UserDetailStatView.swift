@@ -9,7 +9,7 @@ import UIKit
 
 final class UserDetailStatView: UIView {
 
-    private let iconContainerView: UIView = {
+    private lazy var iconContainerView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 24
         view.layer.masksToBounds = true
@@ -18,7 +18,7 @@ final class UserDetailStatView: UIView {
         return view
     }()
 
-    private let iconView: UIImageView = {
+    private lazy var iconView: UIImageView = {
         let iconView = UIImageView()
         iconView.contentMode = .scaleAspectFit
         iconView.tintColor = .label

@@ -9,7 +9,7 @@ import UIKit
 
 final class LocationView: UIView {
 
-    private let iconImageView: UIImageView = {
+    private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(systemName: "mappin.and.ellipse")
         imageView.image = image
@@ -19,7 +19,7 @@ final class LocationView: UIView {
         return imageView
     }()
 
-    private let locationLabel: UILabel = {
+    private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .label

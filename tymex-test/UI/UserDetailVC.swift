@@ -14,7 +14,7 @@ class UserDetailVC: BaseVC {
     private let viewModel: UserDetailViewModel
     private var cancellables = Set<AnyCancellable>()
 
-    private let infoView: UIView = {
+    private lazy var infoView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 16
@@ -28,17 +28,17 @@ class UserDetailVC: BaseVC {
     }()
 
 
-    private let followerStat = UserDetailStatView(icon: UIImage(systemName: "person.2.fill"), value: 0, title: "Follower")
-    private let followingStat = UserDetailStatView(icon: UIImage(systemName: "person.fill.badge.plus"), value: 0, title: "Following")
+    private lazy var followerStat = UserDetailStatView(icon: UIImage(systemName: "person.2.fill"), value: 0, title: "Follower")
+    private lazy var followingStat = UserDetailStatView(icon: UIImage(systemName: "person.fill.badge.plus"), value: 0, title: "Following")
 
-    private let blogLabel: UILabel = {
+    private lazy var blogLabel: UILabel = {
         let label = UILabel()
         label.text = "Blog"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
-    private let blogLinkLabel: UILabel = {
+    private lazy var blogLinkLabel: UILabel = {
         let label = UILabel()
         label.text = "Blog"
         label.font = UIFont.systemFont(ofSize: 14)
@@ -46,7 +46,7 @@ class UserDetailVC: BaseVC {
         return label
     }()
 
-    private let loadingIndicator: UIActivityIndicatorView = {
+    private lazy var loadingIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.hidesWhenStopped = true
         indicator.translatesAutoresizingMaskIntoConstraints = false

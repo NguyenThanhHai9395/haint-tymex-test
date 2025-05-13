@@ -21,6 +21,19 @@ class UserDetailViewModel: ObservableObject {
         self.service = service
     }
 
+    /// Loads the user detail asynchronously for the specified username.
+    ///
+    /// This method sets `isLoading` to `true` while performing the network request,
+    /// then updates the `userDetail` property on success or `errorMessage` on failure.
+    ///
+    /// Call this method from an asynchronous context, such as inside a `Task`.
+    ///
+    /// Example:
+    /// ```
+    /// Task {
+    ///     await viewModel.load()
+    /// }
+    /// ```
     func load() async {
         isLoading = true
         defer { isLoading = false }

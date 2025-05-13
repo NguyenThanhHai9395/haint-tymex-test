@@ -14,6 +14,10 @@ class UserListViewModel: ObservableObject {
     private var lastUserId: Int = 0
     private var isLoading: Bool = false
 
+    /// Initializes the view model with a service and a cache manager.
+    /// - Parameters:
+    ///   - service: The service to fetch GitHub users.
+    ///   - cacheManager: An optional cache manager to persist user data. Defaults to `UserCacheManager`.
     init(service: GithubServiceProtocol, cacheManager: UserCacheManagerProtocol = UserCacheManager()) {
         self.service = service
         self.cacheManager = cacheManager
@@ -24,6 +28,10 @@ class UserListViewModel: ObservableObject {
         }
     }
 
+    /// Loads the initial set of users.
+    ///
+    /// If users have already been loaded or cached, it does not reload.
+    /// Otherwise, it calls `loadMore()` to fetch new data.
     func loadInitial() async {
         if !users.isEmpty {
             return
@@ -31,6 +39,12 @@ class UserListViewModel: ObservableObject {
         await loadMore()
     }
 
+
+    /// Loads more users from GitHub, appending them to the current list.
+    ///
+    /// This function respects pagination by using the last user ID
+    /// and avoids duplicate loading by guarding with the `isLoading` flag.
+    /// On success, the newly fetched users are appended to `users` and saved to cache.
     func loadMore() async {
         guard !isLoading else {
             return
